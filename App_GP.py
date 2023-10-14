@@ -474,7 +474,7 @@ def tela():
             if not os.path.exists(diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11):
                 os.makedirs(diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11)
 
-        messagebox.showinfo("Gestão de arquivos", "Pastas criadas no FTP")
+        messagebox.showinfo("Gestão de arquivos", "Pastas criadas")
 
     secondWindow.button_atualizar = Button(secondWindow.frame_3, text="Projetos", bg='#3b5534', fg='white', border=1,
                                            command=CriarPastaProjetos)
@@ -505,7 +505,7 @@ def tela():
             if not os.path.exists(diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11 + '/' + RENOME_DOC1):
                 os.rename(diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11 + '/' + N_DOC1,
                           diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11 + '/' + RENOME_DOC1)
-        messagebox.showinfo("Gestão de arquivos", "Arquivos renomeados no FTP")
+        messagebox.showinfo("Gestão de arquivos", "Arquivos renomeados")
 
     secondWindow.button_atualizar = Button(secondWindow.frame_3, text="Renomear", bg='#3b5534', fg='white', border=1,
                                            command=RenomearArquivos)
