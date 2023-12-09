@@ -100,35 +100,35 @@ def tela():
         import os
         import glob
 
-        baseDir = "/"
+        Dir = "/"
         dirout = "/"
         out = []
-        os.chdir(f'{baseDir}')
+        os.chdir(f'{Dir}')
         for file_ant_ant in glob.glob("*"):
             if file_ant_ant != 'Thumbs.db':
                 print('file_ant_ant', file_ant_ant)
                 os.chdir(f'{baseDir}/{file_ant_ant}')
                 for file_ant in glob.glob("*"):
                     print('file_ant', file_ant)
-                    os.chdir(f'{baseDir}/{file_ant_ant}/{file_ant}')
+                    os.chdir(f'{Dir}/{file_ant_ant}/{file_ant}')
                     for file in glob.glob("*"):
                         print('file', file)
                         if file != 'Thumbs.db':
-                            os.chdir(f'{baseDir}/{file_ant_ant}/{file_ant}/{file}')
+                            os.chdir(f'{Dir}/{file_ant_ant}/{file_ant}/{file}')
                             for file_pos in glob.glob("*"):
                                 print('file_pos', file_pos)
                                 out.append([file_ant_ant, file_ant, file, file_pos])
 
-        df_out = pd.DataFrame(data=out, columns=['PASTA_ANT', 'PASTA', 'PASTA1', 'ARQUIVO'])
+        df_out = pd.DataFrame(data=out, columns=['PASTA1', 'PASTA2', 'PASTA3', 'ARQUIVO'])
 
-        df_out.to_excel(dirout + '\_lista.xlsx', index=False)
-        # print(dirout+ '\_lista.xlsx')
+        df_out.to_excel(dirout + '\', index=False)
+        # print(dirout+ '\')
 
-        filename1 = "/_lista.xlsx"
+        filename1 = "/"
 
         df1 = pd.read_excel(filename1)
 
-        # EVIDÊNCIAS DE PROGRAMAÇÃO
+        # Arquivo 1
         filter_full = df1.query("ARQUIVO.str.contains('S001')")
         filter_full_prog1 = df1.query("ARQUIVO.str.contains('S001')")
         filter_full_prog2 = df1.query("ARQUIVO.str.contains('S001')")
@@ -164,13 +164,13 @@ def tela():
 
         prog_ = df_concf[["PASTA1", "ARQUIVO"]]
         df_prog = prog_.rename(columns={'ARQUIVO': 'Programação'})
-        df_prog['Programação'] = df_prog['Programação'].map({bool(True): 1},
+        df_prog['P_arquivo'] = df_prog['P_arquivo'].map({bool(True): 1},
                                                             na_action=None)
 
-        df_progf = df_prog.query("Programação == 1")
-        df_progG = df_progf.groupby("PASTA1")["Programação"].count()
+        df_progf = df_prog.query("P_arquivo == 1")
+        df_progG = df_progf.groupby("PASTA1")["P_arquivo"].count()
 
-        # EVIDÊNCIAS DE OPERAÇÃO
+        # Arquivo 2
         filter_full_op = df1.query("ARQUIVO.str.contains('S001')")
         filter_full_op1 = df1.query("ARQUIVO.str.contains('S001')")
         filter_full_op2 = df1.query("ARQUIVO.str.contains('S001')")
@@ -189,14 +189,14 @@ def tela():
         df_concf_O = pd.concat(frames_O)
 
         op_ = df_concf_O[["PASTA1", "ARQUIVO"]]
-        df_op = op_.rename(columns={'ARQUIVO': 'Operação'})
-        df_op['Programação'] = df_op['Operação'].map({bool(True): 1},
+        df_op = op_.rename(columns={'ARQUIVO': 'Q_arquivo'})
+        df_op['P_arquivo'] = df_op['Q_arquivo'].map({bool(True): 1},
                                                      na_action=None)
 
-        df_opf = df_op.query("Operação == 1")
-        df_opG = df_opf.groupby("PASTA1")["Operação"].count()
+        df_opf = df_op.query("Q_arqyivo == 1")
+        df_opG = df_opf.groupby("PASTA1")["Q_arqyuvo"].count()
 
-        # EVIDÊNCIAS DE UNITIZAÇÃO
+        # Arquivo 3
         filter_full_nue = df1.query("ARQUIVO.str.contains('S001')")
         filter_full_nue1 = df1.query("ARQUIVO.str.contains('S001')")
 
@@ -211,22 +211,22 @@ def tela():
         df_concf_N = pd.concat(frames_N)
 
         nue_ = df_concf_N[["PASTA1", "ARQUIVO"]]
-        df_nue = nue_.rename(columns={'ARQUIVO': 'Unitização'})
-        df_nue['Programação'] = df_nue['Unitização'].map({bool(True): 1},
+        df_nue = nue_.rename(columns={'ARQUIVO': 'R_arquivo'})
+        df_nue['P_arquivo'] = df_nue['R_arquivo'].map({bool(True): 1},
                                                          na_action=None)
 
-        df_nuef = df_nue.query("Unitização == 1")
-        df_nueG = df_nuef.groupby("PASTA1")["Unitização"].count()
+        df_nuef = df_nue.query("R_arquivo == 1")
+        df_nueG = df_nuef.groupby("PASTA1")["R_arqyivo"].count()
 
         df_merge = pd.merge(df_progG, df_opG, how='outer', on='PASTA1')
         df_dinamico = pd.merge(df_merge, df_nueG, how='outer', on='PASTA1')
 
-        df_dinamico['Programação'] = df_dinamico['Programação'].fillna(0)
-        df_dinamico['Operação'] = df_dinamico['Operação'].fillna(0)
-        df_dinamico['Unitização'] = df_dinamico['Unitização'].fillna(0)
+        df_dinamico['P_arquivo'] = df_dinamico['P_arquivo'].fillna(0)
+        df_dinamico['Operação'] = df_dinamico['Q_arquivo'].fillna(0)
+        df_dinamico['Unitização'] = df_dinamico['R_arquivo'].fillna(0)
 
         dinamico = pd.DataFrame(data=df_dinamico)
-        dinamico.to_excel('/dinamico.xlsx')
+        dinamico.to_excel('/')
 
         messagebox.showinfo("Atualizar Dados", "Dados atualizados com sucesso.")
 
@@ -254,7 +254,7 @@ def tela():
     secondWindow.treeview.pack(expand=True, fill="both")
     secondWindow.scrollbar.config(command=secondWindow.treeview.yview)
 
-    filename = "/_lista.xlsx"
+    filename = "/"
     df = pd.read_excel(filename)
 
     columns = list(df.columns)
@@ -277,18 +277,18 @@ def tela():
 
     def select_EPS(*args):
         secondWindow.treeview.delete(*secondWindow.treeview.get_children())
-        for index, row in df.loc[df["PASTA_ANT"].eq(secondWindow.optionemenu_EPS.get())].iterrows():
+        for index, row in df.loc[df["PASTA1"].eq(secondWindow.optionemenu_EPS.get())].iterrows():
             secondWindow.treeview.insert("", "end", text=index, values=list(row))
 
-    def select_CONTRATO(*args):
+    def select_C(*args):
         secondWindow.treeview.delete(*secondWindow.treeview.get_children())
         for index, row in df.loc[df["PASTA"].eq(secondWindow.optionemenu_CONTRATO.get())].iterrows():
             secondWindow.treeview.insert("", "end", text=index, values=list(row))
 
-    def select_PROJETO(*args):
-        pesproj = secondWindow.entry_projeto.get()
-        proj = df["PASTA1"].unique()
-        projD = df1["PASTA1"].unique()
+    def select_P(*args):
+        pesproj = secondWindow.entry_p.get()
+        proj = df["PASTA2"].unique()
+        projD = df1["PASTA2"].unique()
 
         if pesproj in proj:
             secondWindow.treeview.delete(*secondWindow.treeview.get_children())
@@ -296,12 +296,12 @@ def tela():
             for index, row in df.loc[df["PASTA1"] == comparedValue].iterrows():
                 secondWindow.treeview.insert("", "end", text=index, values=list(row))
         else:
-            messagebox.showinfo("Gestão de Arquivos", "Projeto inexistente na Pasta")
+            messagebox.showinfo("Gestão de Arquivos", "inexistente na Pasta")
 
-        if pesproj in projD:
+        if pesp in pD:
             secondWindow.treeviewD.delete(*secondWindow.treeviewD.get_children())
-            comparedValueD = secondWindow.entry_projeto.get()
-            for index, row in df1.loc[df1["PASTA1"] == comparedValueD].iterrows():
+            comparedValueD = secondWindow.entry_p.get()
+            for index, row in df1.loc[df1["PASTA2"] == comparedValueD].iterrows():
                 secondWindow.treeviewD.insert("", "end", text=index, values=list(row))
 
     def Limpar():
@@ -315,7 +315,7 @@ def tela():
 
     secondWindow.treeview.pack()
 
-    # TREEVIEW TABELA DINÂMICA
+    # TREEVIEW TABELAD
     secondWindow.panedD = ttk.PanedWindow(secondWindow.frame_1, width=250)
     secondWindow.panedD.place(relx=0.01, rely=0.1, relwidth=0.99, relheight=0.85)
 
@@ -335,18 +335,18 @@ def tela():
     secondWindow.treeviewD.pack(expand=True, fill="both")
     secondWindow.scrollbarD.config(command=secondWindow.treeviewD.yview)
 
-    filename1 = "/dinamico.xlsx"
+    filename1 = "/"
     df_1 = pd.read_excel(filename1)
-    df1 = df_1[["PASTA1", "Programação", "Operação", "Unitização"]]
+    df1 = df_1[["PASTA2", "P_arquivo", "Q_arquivo", "R_arquivo"]]
 
     columns = list(df1.columns)
     secondWindow.treeviewD["columns"] = columns
 
     secondWindow.treeviewD.heading("#0", text="", anchor="w")
     secondWindow.treeviewD.heading("#1", text="Pasta", anchor="w")
-    secondWindow.treeviewD.heading("#2", text="Programação")
-    secondWindow.treeviewD.heading("#3", text="Operação")
-    secondWindow.treeviewD.heading("#4", text="Unitização")
+    secondWindow.treeviewD.heading("#2", text="P_arquivo")
+    secondWindow.treeviewD.heading("#3", text="Q_arquivo")
+    secondWindow.treeviewD.heading("#4", text="R_arquivo")
 
     secondWindow.treeviewD.column("#0", width=30)
     secondWindow.treeviewD.column("#1", width=100)
@@ -372,8 +372,8 @@ def tela():
                                     bg='#3b5534', fg='#ffffff', font=('Microsoft YaHei UI Light', 8))
     secondWindow.label_data.place(relx=0.68, rely=0.01, relwidth=0.4, relheight=0.04)
 
-    # PESQUISAR PROJETO
-    secondWindow.label_projeto = Label(secondWindow.frame_3, text="PASTAS", anchor="w", bg='#3b5534',
+    # PESQUISAR
+    secondWindow.label_projeto = Label(secondWindow.frame_3, text="ARQUIVOS", anchor="w", bg='#3b5534',
                                        fg='#ffffff', font=('Microsoft YaHei UI Light', 7))
     secondWindow.label_projeto.place(relx=0.06, rely=0.2, relwidth=0.6, relheight=0.04)
 
@@ -381,14 +381,14 @@ def tela():
     secondWindow.entry_projeto.place(relx=0.06, rely=0.25, relwidth=0.8, relheight=0.04)
 
     secondWindow.button_projeto = Button(secondWindow.frame_3, text='pesquisar', bg='#3b5534', fg='white', border=0,
-                                         command=select_PROJETO)
+                                         command=select_P)
     secondWindow.button_projeto.place(relx=0.46, rely=0.3, relwidth=0.4, relheight=0.04)
 
-    secondWindow.button_projeto = Button(secondWindow.frame_2, text='limpar', bg='#ffffff', fg='#3b5534', border=0,
+    secondWindow.button_p = Button(secondWindow.frame_2, text='limpar', bg='#ffffff', fg='#3b5534', border=0,
                                          command=Limpar)
-    secondWindow.button_projeto.place(relx=0.85, rely=0.01, relwidth=0.150, relheight=0.07)
+    secondWindow.button_p.place(relx=0.85, rely=0.01, relwidth=0.150, relheight=0.07)
 
-    secondWindow.label_treeview = Label(secondWindow.frame_2, text='PASTAS', bg='#ffffff', fg='#3b5534',
+    secondWindow.label_treeview = Label(secondWindow.frame_2, text='ARQUIVOS', bg='#ffffff', fg='#3b5534',
                                         border=0)
     secondWindow.label_treeview.place(relx=0.35, rely=0.02, relwidth=0.25, relheight=0.07)
 
@@ -396,19 +396,19 @@ def tela():
                                          command=Limpar)
     secondWindow.button_projeto.place(relx=0.85, rely=0.01, relwidth=0.150, relheight=0.07)
 
-    secondWindow.label_treeview = Label(secondWindow.frame_1, text='DOCUMENTOS POR PROJETO', bg='#ffffff', fg='#3b5534',
+    secondWindow.label_treeview = Label(secondWindow.frame_1,""', bg='#ffffff', fg='#3b5534',
                                         border=0)
     secondWindow.label_treeview.place(relx=0.35, rely=0.02, relwidth=0.25, relheight=0.07)
 
-    # EXPORTAR DADOS
+    # EXPORTAR
     def ExportarDados():
-        arquivoGP = pd.DataFrame(df)
+        arquivo = pd.DataFrame(df)
         dinamico = pd.DataFrame(df1)
 
         writer = pd.ExcelWriter('/arquivoGP.xlsx',
                                 engine='xlsxwriter')
 
-        arquivoGP.to_excel(writer, sheet_name='PASTA')
+        arquivo.to_excel(writer, sheet_name='PASTA')
         dinamico.to_excel(writer, sheet_name='Pastas')
         writer.save()
 
@@ -428,12 +428,12 @@ def tela():
                                        fg='#ffffff', font=('Microsoft YaHei UI Light', 7))
     secondWindow.label_projeto.place(relx=0.15, rely=0.6, relwidth=0.7, relheight=0.05)
 
-    # CRIAR PASTA PROJETOS MENSAIS
-    def CriarPastaProjetosMensais():
+    # CRIAR PASTA
+    def CriarPasta():
         diretório = '/'
         arquivo = filedialog.askopenfilename()
         df_cpp = pd.read_excel(arquivo)
-        df_cpp1 = df_cpp["PASTA_ANT"].count() + 1
+        df_cpp1 = df_cpp["PASTA1"].count() + 1
         linhas = df_cpp1
         wb = load_workbook(arquivo)
         ws = wb.active
@@ -450,34 +450,34 @@ def tela():
 
         messagebox.showinfo("Gestão de Arquivos", "Pastas Criadas")
 
-    secondWindow.button_atualizar = Button(secondWindow.frame_3, text="Projetos Mensais", bg='#3b5534', fg='white',
-                                           border=1, command=CriarPastaProjetosMensais)
+    secondWindow.button_atualizar = Button(secondWindow.frame_3, text="Nome", bg='#3b5534', fg='white',
+                                           border=1, "criar pasta")
     secondWindow.button_atualizar.place(relx=0.15, rely=0.475, relwidth=0.7, relheight=0.05)
 
-    # CRIAR PASTA PROJETOS MENSAIS
+    # CRIAR PASTA
     def CriarPastaProjetos():
         diretório = '/'
         arquivo = filedialog.askopenfilename()
         df_cp = pd.read_excel(arquivo)
-        df_cp1 = df_cp["PASTA_ANT"].count() + 1
+        df_cp1 = df_cp["PASTA1"].count() + 1
         linhas = df_cp1
         wb = load_workbook(arquivo)
         ws = wb.active
         n = linhas
         for row in range(2, n):
-            PASTA_ANT = ws.cell(row=row, column=1).value
+            PASTA1 = ws.cell(row=row, column=1).value
             PASTA = ws.cell(row=row, column=2).value
             PASTA_1 = ws.cell(row=row, column=3).value
-            PASTA_ANT1 = str(PASTA_ANT)
+            PASTA1 = str(PASTA_ANT)
             PASTA1 = str(PASTA)
             PASTA_11 = str(PASTA_1)
-            if not os.path.exists(diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11):
-                os.makedirs(diretório + PASTA_ANT1 + '/' + PASTA1 + '/' + PASTA_11)
+            if not os.path.exists(diretório + PASTA1 + '/' + PASTA1 + '/' + PASTA_11):
+                os.makedirs(diretório + PASTA1 + '/' + PASTA1 + '/' + PASTA_11)
 
         messagebox.showinfo("Gestão de arquivos", "Pastas criadas")
 
     secondWindow.button_atualizar = Button(secondWindow.frame_3, text="Projetos", bg='#3b5534', fg='white', border=1,
-                                           command=CriarPastaProjetos)
+                                           command=CriarPasta)
     secondWindow.button_atualizar.place(relx=0.15, rely=0.525, relwidth=0.7, relheight=0.05)
 
     # RENOMEAR ARQUIVOS
