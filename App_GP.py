@@ -15,7 +15,7 @@ import shutil
 # ----INICIANDO APP----#
 #######################
 root = tk.Tk()
-root.title("GP | Gestão de Pastas de Obras")
+root.title("Gestão de Arquivos")
 root.geometry('680x415')
 root.configure(bg="#fff")
 root.resizable(False, False)
