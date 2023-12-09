@@ -11,7 +11,7 @@ from tkinter import filedialog
 import os.path
 import shutil
 
-######################
+#####################
 # ----INICIANDO APP----#
 #######################
 root = tk.Tk()
